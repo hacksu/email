@@ -10,18 +10,18 @@ let thing2 = EmailTemplate({
     subject: "woooah"
 })
 
-const Styles = Stylesheet(
-    Stylesheet('./styles/test.scss')
+const Styles = Stylesheet( // adding stylesheets
+    Stylesheet('./styles/test.css')
     +
     Stylesheet('./styles/test2.scss')
 );
-const Styles2 = Stylesheet(
-    './styles/test.scss'
+const Styles2 = Stylesheet( // adding filenames
+    './styles/test.css'
     +
     './styles/test2.scss'
 );
-const Styles3 = Stylesheets([
-    './styles/test.scss',
+const Styles3 = Stylesheets([ // array filenames
+    '@email/test.css', // refering to @hacksu/email/styles instead of relative
     './styles/test2.scss',
 ])
 let a = new thing1({

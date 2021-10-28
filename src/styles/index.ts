@@ -19,11 +19,13 @@ export function Stylesheet(source: string, format: StylesheetType = StylesheetTy
         if (format == StylesheetType.react) {
             return RawStyle.bind(null, source.split(/<\/?style>/g).join(''));
         }
-    } else if (source.split(/\.scss/g).filter(o => o.length > 0).length > 1) {
-        let sources: any[] = source.split(/\.scss/g)
+    } else if (source.split(/\.s?css/g).filter(o => o.length > 0).length > 1) {
+        let extensions: string[] = source.split(/\.(s?css)/g)
+        .filter((o, i) => i % 2 == 1);
+        let sources: any[] = source.split(/\.s?css/g)
         .filter(o => o.length > 0)
-        .map((source_: string) => {
-            return ImportSass(source_ + '.scss', format)
+        .map((source_: string, i) => {
+            return ImportSass(source_ + '.' + extensions[i], format)
         });
         let result = "";
         for (let x of sources) {
@@ -43,7 +45,13 @@ export function ImportSass(str: string, format: StylesheetType): string|any {
     const stack = StackTrace(); // get stack trace of this function call
     const filteredStack = stack.filter((o: any) => o && o.fileName && isJSXorTSX.test(o.fileName)); // only return jsx and tsx files, as those will interact with sass
     const callerName = filteredStack[0].fileName; // get the first instance, aka the one who called 'importSass'
-    let pth = path.resolve(path.dirname(callerName), str) // determine sass file location with the caller in context, thus allowing relative imports
+    let pth: string;
+    if (str.includes('@email')) {
+        pth = path.resolve(__dirname, str.split("@email/").pop() as string);
+    } else {
+        pth = path.resolve(path.dirname(callerName), str) // determine sass file location with the caller in context, thus allowing relative imports
+    }
+    console.log({ pth })
     let result = sass.renderSync({ file: pth })
     // @ts-ignore
     result.stylesheet = '<style>' + result.css.toString('utf8') + '</style>';
