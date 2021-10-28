@@ -1,6 +1,9 @@
 
+This package provides a simple interface to send emails for HacKSU and Kent Hsck Enough.
 
+Supports email templates, React JSX, markdown, Sass, and more.
 
+## Example Usage
 ```tsx
 import { Email, EmailTemplate, Stylesheet, Sendgrid, SUBSTITUTION_TAG } from '@hacksu/email';
 
