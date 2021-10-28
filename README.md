@@ -1,5 +1,5 @@
 
-This package provides a simple interface to send emails for HacKSU and Kent Hsck Enough.
+This package provides a simple interface to send emails for HacKSU and Kent Hack Enough.
 
 Supports email templates, React JSX, markdown, Sass, and more.
 
