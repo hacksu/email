@@ -1,9 +1,6 @@
 
+export * from './email';
+export * from './styles';
+import { Email, EmailTemplate } from './email';
 
-export class Email {
-    subject: string;
-
-    constructor(subject: string) {
-        this.subject = subject;
-    }
-}
+// compute all the templates
