@@ -6,9 +6,17 @@ import { convert as html2text } from 'html-to-text';
 import React from 'react';
 import { MATCH_SUBSTITUTION_TAGS } from '.';
 
-export interface EmailArguments {
+
+type Partial<T> = {
+    [P in keyof T]?: T[P];
+};
+
+import { MailData as SendgridMailData } from '@sendgrid/helpers/classes/mail';
+
+export interface EmailArguments extends Partial<SendgridMailData> {
     subject?: string;
     template?: any;
+    content?: any;
     [key: string]: any;
 }
 
@@ -16,10 +24,6 @@ enum RenderMethod {
     html = "html",
     text = "text",
 }
-
-type Partial<T> = {
-    [P in keyof T]?: T[P];
-};
 
 export class Email {
     [key: string]: any;

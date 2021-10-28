@@ -22,6 +22,22 @@ const SomeStyles = Stylesheet(
     Stylesheet('./style.scss') + HacksuMailingStyles
 );
 
+
+// deliver a markdown email
+SendgridDelivery.send(new Email({
+    from: "mail@hacksu.com',
+    to: 'test@example.com',
+    subject: "hi there!",
+    content: `
+# Title 1
+## Title 2
+Content
+
+<a href="%unsubscribe%">unsubscribe</a>
+    `
+}))
+
+
 // react JSX email template
 // substitution tags are %field%, or SUBSTITUTION_TAG(field)
 const WelcomeTemplate = EmailTemplate({
