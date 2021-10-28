@@ -69,7 +69,7 @@ const KHEMailer = new Sendgrid(sendgridToken, {
 })
 
 
-KHEMailer.send(a, {
-    to: "cseitz5@kent.edu"
-}).then(console.log).catch(err => console.error(err))
+// KHEMailer.send(a, {
+//     to: "cseitz5@kent.edu"
+// }).then(console.log).catch(err => console.error(err))
 
