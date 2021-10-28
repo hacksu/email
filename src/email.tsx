@@ -48,9 +48,10 @@ export class Email {
         let html;
         if (isReact) {
             html = renderToStaticMarkup(<Contents email={this}/>);
-        } else {
+        } else if (contents) {
             html = marked(contents);
         }
+        if (!html) return;
         let result = html;
         if (method == 'text') {
             result = html2text(html, {
@@ -61,7 +62,6 @@ export class Email {
         const tags = result.split(MATCH_SUBSTITUTION_TAGS)
         .map((tag: string) => {
             if (MATCH_SUBSTITUTION_TAGS.test(tag)) {
-                console.log({ tag })
                 let tagContent = tag.match(/\w+/)?.[0];
                 if (tagContent && tagContent in email) {
                     return email[tagContent];
@@ -82,6 +82,6 @@ export function EmailTemplate(args: EmailArguments) {
     // console.log(TemplatedEmail.prototype);
     // TemplatedEmail.prototype = Email;
     // console.log(TemplatedEmail.prototype);
-    let TemplatedEmail = Email.bind(Email, args);
+    let TemplatedEmail = Email.bind(null, args);
     return TemplatedEmail;
 }

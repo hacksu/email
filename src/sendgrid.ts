@@ -3,6 +3,8 @@ import { MailData, MailDataRequired } from '@sendgrid/helpers/classes/mail';
 import { Email } from './email';
 import { SUBSTITUTION_TAG } from '.';
 
+const NO_SEND = false;
+
 type Partial<T> = {
     [P in keyof T]?: T[P];
 };
@@ -21,10 +23,12 @@ export class Sendgrid {
 
     async send(mail: Email, additionalPayload?: Partial<MailData>) {
         // @ts-ignore
-        let payload: MailDataRequired = (this.defaultPayload || {});
+        let payload: MailDataRequired = Object.assign({ ...mail },
+            (this.defaultPayload || {})
+        );
+        Object.setPrototypeOf(payload, mail);
         payload.text = await mail.render('text');
         payload.html = await mail.render();
-        payload.subject = mail.subject;
         payload.trackingSettings = {
             subscriptionTracking: {
                 enable: true,
@@ -33,6 +37,7 @@ export class Sendgrid {
         }
         if (additionalPayload) Object.assign(payload, additionalPayload);
         console.log(payload);
+        if (NO_SEND) return "Sending is disabled";
         return this.service.send(payload as MailDataRequired);
     }
 }

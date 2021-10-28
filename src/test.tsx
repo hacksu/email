@@ -38,6 +38,8 @@ let a = new thing1({
             <div>
                 eeeeeeeeey, {email.subject}, %subject%
                 <br></br>
+                name = %name%
+                <br></br>
                 <a href="%unsubscribe%">unsubscribe</a>
             </div>
         </React.Fragment>)
@@ -68,6 +70,40 @@ const KHEMailer = new Sendgrid(sendgridToken, {
     }
 })
 
+
+let welc = EmailTemplate({
+    subject: "Welcome to KHE!",
+    content: function({ email }: { email: Email }) {
+        return (<React.Fragment>
+            <Styles3/>
+            <div>
+                eeeeeeeeey, {email.subject}, %subject%
+                <br></br>
+                name = %name%
+                <br></br>
+                <a href="%unsubscribe%">unsubscribe</a>
+            </div>
+        </React.Fragment>)
+    }
+})
+
+let em = new welc({
+    to: 'cseitz5@kent.edu',
+    name: 'Chris'
+});
+em.render().then(console.log);
+
+// KHEMailer.send(em)
+// .then(console.log).catch(err => console.error(err))
+
+let em2 = new welc({
+    to: 'bruh@kent.edu',
+    name: 'Bruh'
+});
+em2.render().then(console.log);
+
+// KHEMailer.send(em2)
+// .then(console.log).catch(err => console.error(err))
 
 // KHEMailer.send(a, {
 //     to: "cseitz5@kent.edu"

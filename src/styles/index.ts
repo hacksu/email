@@ -51,7 +51,7 @@ export function ImportSass(str: string, format: StylesheetType): string|any {
     } else {
         pth = path.resolve(path.dirname(callerName), str) // determine sass file location with the caller in context, thus allowing relative imports
     }
-    console.log({ pth })
+    // console.log({ pth })
     let result = sass.renderSync({ file: pth })
     // @ts-ignore
     result.stylesheet = '<style>' + result.css.toString('utf8') + '</style>';
