@@ -1,0 +1,29 @@
+{
+  "name": "@hacksu/email",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "prepublish": "npm run build",
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hacksu/email.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hacksu/email/issues"
+  },
+  "homepage": "https://github.com/hacksu/email#readme",
+  "devDependencies": {
+    "copyfiles": "^2.4.1",
+    "rimraf": "^3.0.2",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.4.4"
+  }
+}
