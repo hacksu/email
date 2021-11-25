@@ -16,7 +16,8 @@ jobs:
   publish:
     name: Publish
     runs-on: ubuntu-latest
-    if: github.event_name == 'workflow_dispatch' || needs.versioning.outputs.run_publish == 'true'
+    needs: versioning
+    if: github.event_name == 'workflow_dispatch' || needs.versioning.outputs.run_publish != 'false'
     permissions:
       contents: read
       packages: write
