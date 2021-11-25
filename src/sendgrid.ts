@@ -40,7 +40,7 @@ export class Sendgrid {
             }
         }
         if (additionalPayload) Object.assign(payload, additionalPayload);
-        console.log(payload);
+        if ('EMAIL_DEBUG' in process.env) console.log(payload);
         if (NO_SEND) return "Sending is disabled";
         return this.service.send(payload as MailDataRequired);
     }
