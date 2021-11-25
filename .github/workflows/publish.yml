@@ -6,8 +6,42 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  versioning:
     runs-on: ubuntu-latest
+    name: Versioning
+    concurrency:
+      group: automatic_versioning
+      cancel-in-progress: true
+    outputs:
+      run_publish: ${{ steps.check_publish.outputs.run_publish }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+      - name: Versioning Precheck
+        id: check_publish
+        run: |
+          pkgName=$(cat package.json | jq -r ".name");
+          publishedVersion=$(curl "https://registry.npmjs.org/${pkgName}/latest" | jq -r ".version");
+          currentVersion=$(cat package.json | jq -r ".version");
+          echo "Package: $pkgName";
+          echo "Published: $publishedVersion";
+          echo "Current: $currentVersion";
+          if [ "$publishedVersion" = "$currentVersion" ]
+          then
+              echo "Publish: false"
+              echo "::set-output name=run_publish::false"
+          else
+              echo "Publish: true"
+              echo "::set-output name=run_publish::true"
+          fi
+
+  publish:
+    runs-on: ubuntu-latest
+    name: Publish
+    needs: versioning
+    if: github.event_name == 'workflow_dispatch' || needs.publish.outputs.run_publish == 'true'
     permissions:
       contents: read
       packages: write
