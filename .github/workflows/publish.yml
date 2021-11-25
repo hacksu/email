@@ -43,7 +43,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Publish
     needs: versioning
-    if: github.event_name == 'workflow_dispatch2' || needs.publish.outputs.run_publish == 'true'
+    if: github.event_name == 'workflow_dispatch2' || needs.versioning.outputs.run_publish == 'true'
     permissions:
       contents: read
       packages: write
