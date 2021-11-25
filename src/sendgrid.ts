@@ -21,13 +21,15 @@ export class Sendgrid {
         }
     }
 
-    async send(mail: Email, additionalPayload?: Partial<MailData>) {
+    async send(mail: Email, additionalPayload?: Partial<MailData>, options?: {
+        text: boolean
+    }) {
         // @ts-ignore
         let payload: MailDataRequired = Object.assign({ ...mail },
             (this.defaultPayload || {})
         );
         Object.setPrototypeOf(payload, mail);
-        payload.text = await mail.render('text');
+        if (options && options.text) payload.text = await mail.render('text');
         payload.html = await mail.render();
         payload.trackingSettings = {
             subscriptionTracking: {
