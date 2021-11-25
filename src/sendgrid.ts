@@ -29,7 +29,8 @@ export class Sendgrid {
             (this.defaultPayload || {})
         );
         Object.setPrototypeOf(payload, mail);
-        if (options && options.text) payload.text = await mail.render('text');
+        // if (options && options.text) 
+        payload.text = await mail.render('text');
         payload.html = await mail.render();
         payload.trackingSettings = {
             subscriptionTracking: {
