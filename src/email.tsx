@@ -53,7 +53,9 @@ export class Email {
         if (isReact) {
             html = renderToStaticMarkup(<Contents email={this}/>);
         } else if (contents) {
-            if (!contents.includes(`<!DOCTYPE html>`)) {
+            if (contents.includes(`<!DOCTYPE html>`)) {
+                html = contents;
+            } else {
                 html = marked(contents);
             }
         }
