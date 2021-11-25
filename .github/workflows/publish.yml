@@ -23,3 +23,6 @@ jobs:
       packages: write
     steps:
       - uses: hacksu/workflows/packages/publish@main
+        with:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
