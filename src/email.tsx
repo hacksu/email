@@ -34,7 +34,6 @@ export class Email {
     }
     async render(method: 'html' | 'text' = 'html') {
         let contents = (this.content || this.template);
-        console.log({ contents })
         let contents_ = contents;
         let isReact = false;
         if (contents instanceof Promise) contents = await contents;
@@ -55,7 +54,7 @@ export class Email {
             html = renderToStaticMarkup(<Contents email={this}/>);
         } else if (contents) {
             if (!contents.includes(`<!DOCTYPE html>`)) {
-                console.log('utilizing email markdown')
+                // console.log('utilizing email markdown')
                 html = marked(contents);
             }
         }

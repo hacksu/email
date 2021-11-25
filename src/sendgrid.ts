@@ -32,6 +32,7 @@ export class Sendgrid {
         // if (options && options.text) 
         payload.text = await mail.render('text');
         payload.html = await mail.render();
+        payload.content = undefined;
         payload.trackingSettings = {
             subscriptionTracking: {
                 enable: true,
